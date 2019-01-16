@@ -41,8 +41,8 @@
           <div class="input-group">
             <a href="http://www.google.com" id="mylink" target="_blank"></a>
 
-            <input type="text" id="keyword" class="form-control" onkeypress="return captureKeys(event);" placeholder="Search"
-              aria-label="Search" autocomplete="off">
+            <input type="text" id="keyword" class="form-control" onkeypress="return captureKeys(event);" onclick="this.setSelectionRange(0, this.value.length)"
+              placeholder="Search" aria-label="Search" autocomplete="off">
             <a href="#" id="google_txt" class="btn btn-primary" onclick="submit_query('google_txt')">Google</a>
             <a href="#" id="baidu_txt" class="btn btn-secondary" onclick="submit_query('baidu_txt')">Baidu</a>
           </div>
@@ -56,6 +56,15 @@
       </div>
       <div class="row">
         <div class="col-md-12">
+          <ul class="nav">
+            <li class="nav-item"><span class="nav-link">常用：</span></li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://gmail.com" target="_blank">GMail</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com" target="_blank">GitHub</a>
+            </li>
+          </ul>
           <ul class="nav">
             <li class="nav-item"><span class="nav-link">数字货币：</span></li>
             <li class="nav-item">
@@ -153,7 +162,7 @@
       if (his) {
         if (his.includes(word)) return;
         his.unshift(word);
-        if(his.length > 20) his.pop();
+        if (his.length > 20) his.pop();
       } else {
         his = [];
         his.unshift(word);
