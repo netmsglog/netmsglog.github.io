@@ -153,6 +153,7 @@
       if (his) {
         if (his.includes(word)) return;
         his.unshift(word);
+        if(his.length > 20) his.pop();
       } else {
         his = [];
         his.unshift(word);
