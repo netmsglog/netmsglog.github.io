@@ -49,53 +49,58 @@
         </div>
       </div>
     </div>
-    <div class="row"></div>
+    <div class="row">
       <div class="col-md-12">
-        <ul class="nav">
-          <li class="nav-item"><span class="nav-link">数字货币：</span></li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.okex.com" target="_blank">OKEx</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.hbg.com" target="_blank">火币</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.binance.com" target="_blank">币安</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://standard.paxos.com/PAX" target="_blank">PAX</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://app.trusttoken.com/home" target="_blank">TUSD</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://otc.huobi.co/zh-cn/trade/buy-usdt/" target="_blank">火币OTC</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.okex.com/otc" target="_blank">OKEx OTC</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://www.boc.cn/sourcedb/whpj/" target="_blank">中银外汇牌价</a>
-          </li>
-
-        </ul>
-        <ul class="nav">
-          <li class="nav-item"><span class="nav-link">网络课程：</span></li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="https://study.163.com/" target="_blank">网易163</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.udemy.com/" target="_blank">Udemy</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://quizlet.com/" target="_blank">Quizlet</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="https://www.coursera.org/" target="_blank">CourseEra</a>
-            </li>
-        </ul>
+        <div id="shistory"></div>
       </div>
+    </div>
+    <div class="row"></div>
+    <div class="col-md-12">
+      <ul class="nav">
+        <li class="nav-item"><span class="nav-link">数字货币：</span></li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.okex.com" target="_blank">OKEx</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.hbg.com" target="_blank">火币</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.binance.com" target="_blank">币安</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://standard.paxos.com/PAX" target="_blank">PAX</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://app.trusttoken.com/home" target="_blank">TUSD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://otc.huobi.co/zh-cn/trade/buy-usdt/" target="_blank">火币OTC</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.okex.com/otc" target="_blank">OKEx OTC</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://www.boc.cn/sourcedb/whpj/" target="_blank">中银外汇牌价</a>
+        </li>
+
+      </ul>
+      <ul class="nav">
+        <li class="nav-item"><span class="nav-link">网络课程：</span></li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="https://study.163.com/" target="_blank">网易163</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.udemy.com/" target="_blank">Udemy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://quizlet.com/" target="_blank">Quizlet</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.coursera.org/" target="_blank">CourseEra</a>
+        </li>
+      </ul>
+    </div>
     </div>
 
 
@@ -110,6 +115,7 @@
     function putFocus() {
       var keyword = document.getElementById("keyword");
       keyword.focus();
+      showHistory();
     }
     function submit_query(t_query) {
       var keyword = document.getElementById("keyword");
@@ -124,8 +130,31 @@
       }
       mylink.href = loc;
       mylink.click();
+      saveHistory(keyword);
+      
     }
-
+    function showHistory() {
+      var his = JSON.parse(localStorage.getItem("history"));
+      if (his) {
+        var html = '';
+        for (var i = 0; i < his.length; i++) {
+          html = html + '<button onclick="setWord()">' + his[i] + '</button>';
+        }
+        document.getElementById('shistory').innerHTML = html;
+      }
+    }
+    function saveHistory(word) {
+      var his = JSON.parse(localStorage.getItem("history"));
+      if (his) {
+        if (his.includes(word)) return;
+        his.unshift(word);
+      } else {
+        his = [];
+        his.unshift(word);
+      }
+      localStorage.setItem("history", JSON.stringify(his));
+      showHistory();
+    }
     function captureKeys(evt) {
       var keyCode = evt.keyCode ? evt.keyCode :
         evt.charCode ? evt.charCode : evt.which;
@@ -136,6 +165,7 @@
         }
 
         submit_query('google_txt');
+       
         return false;
       }
       return true;
