@@ -144,7 +144,7 @@
       var mylink = document.getElementById("mylink");
       switch (t_query) {
         case "baidu_txt":
-          loc = "https://www.baidu.com/s?wd=" + keyword.value + "&ie=utf-8";
+          loc = encodeURI("https://www.baidu.com/s?wd=" + keyword.value + "&ie=utf-8");
           break;
         case "google_txt":
           loc = encodeURI("https://www.google.com/search?hl=en&q=" + keyword.value);
