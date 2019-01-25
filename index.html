@@ -156,8 +156,9 @@
 
     }
 
-    function setWord() {
-      var src = event.target || event.srcElement;
+    function setWord(ev) {
+      var e = window.event || ev;
+      var src = e.target || e.srcElement;
       document.getElementById('keyword').value = src.innerText;
       document.getElementById('keyword').focus();
     }
@@ -167,7 +168,7 @@
       if (his) {
         var html = '';
         for (var i = 0; i < his.length; i++) {
-          html = html + '<button onclick="setWord()">' + his[i] + '</button>';
+          html = html + '<button onclick="setWord(ev)">' + his[i] + '</button>';
         }
         document.getElementById('shistory').innerHTML = html;
       }
